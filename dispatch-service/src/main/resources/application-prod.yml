@@ -1,0 +1,6 @@
+spring:
+  kafka:
+    properties:
+      security.protocol: SASL_SSL
+      sasl.mechanism: SCRAM-SHA-256
+      sasl.jaas.config: ${KAFKA_SASL_JAAS_CONFIG}
