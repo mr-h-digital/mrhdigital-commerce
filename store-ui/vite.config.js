@@ -12,15 +12,6 @@ export default defineConfig({
       '/api/inventory': 'http://localhost:8084',
       '/api/events':    'http://localhost:8086',
 
-      // Keycloak — proxy all realm + admin calls to avoid CORS
-      '/realms': {
-        target: 'http://localhost:8180',
-        changeOrigin: true
-      },
-      '/admin': {
-        target: 'http://localhost:8180',
-        changeOrigin: true
-      }
     }
   }
 })

@@ -1,6 +1,7 @@
 spring:
-  kafka:
-    properties:
-      security.protocol: SASL_SSL
-      sasl.mechanism: SCRAM-SHA-256
-      sasl.jaas.config: ${KAFKA_SASL_JAAS_CONFIG}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Auth0 JWKS endpoint — replace YOUR_DOMAIN with your Auth0 tenant domain
+          jwk-set-uri: ${AUTH0_DOMAIN:https://your-tenant.auth0.com}/.well-known/jwks.json

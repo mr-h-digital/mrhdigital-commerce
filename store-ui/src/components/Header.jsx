@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useCart } from '../context/CartContext.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import AuthButton from './AuthButton.jsx'
-import AuthModal from './AuthModal.jsx'
 import styles from './Header.module.css'
 
 export default function Header({
@@ -12,15 +11,14 @@ export default function Header({
   bg, onBgChange, backgrounds = []
 }) {
   const { count } = useCart()
-  const { profile } = useAuth()
-  const [bgPickerOpen,  setBgPickerOpen]  = useState(false)
-  const [showAuthModal, setShowAuthModal] = useState(false)
+  const { profile, login } = useAuth()
+  const [bgPickerOpen, setBgPickerOpen] = useState(false)
 
   function handleDashboardClick() {
     if (profile) {
       onViewChange('dashboard')
     } else {
-      setShowAuthModal(true)
+      login()
     }
   }
 
@@ -118,13 +116,6 @@ export default function Header({
       </div>
     </header>
 
-    {/* Sign-in prompt when guest clicks Dashboard */}
-    {showAuthModal && (
-      <AuthModal
-        initialTab="login"
-        onClose={() => setShowAuthModal(false)}
-      />
-    )}
     </>
   )
 }

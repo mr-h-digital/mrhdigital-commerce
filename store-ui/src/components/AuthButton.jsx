@@ -1,11 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
-import AuthModal from './AuthModal.jsx'
 import styles from './AuthButton.module.css'
 
 export default function AuthButton() {
-  const { profile, logout } = useAuth()
-  const [modalTab, setModalTab] = useState(null)  // null | 'login' | 'register'
+  const { profile, login, logout } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
   const ref = useRef(null)
 
@@ -16,20 +14,13 @@ export default function AuthButton() {
     return () => document.removeEventListener('mousedown', handle)
   }, [])
 
-  // Not logged in
+  // Not logged in — both buttons trigger Auth0 Universal Login
   if (!profile) {
     return (
-      <>
-        <div className={styles.guestBtns}>
-          <button className={styles.loginBtn}    onClick={() => setModalTab('login')}>
-            Sign in
-          </button>
-          <button className={styles.registerBtn} onClick={() => setModalTab('register')}>
-            Register
-          </button>
-        </div>
-        {modalTab && <AuthModal initialTab={modalTab} onClose={() => setModalTab(null)} />}
-      </>
+      <div className={styles.guestBtns}>
+        <button className={styles.loginBtn}    onClick={login}>Sign in</button>
+        <button className={styles.registerBtn} onClick={login}>Register</button>
+      </div>
     )
   }
 
