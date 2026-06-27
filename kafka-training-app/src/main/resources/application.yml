@@ -1,6 +1,6 @@
 spring:
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
       group-id: kafka-training-group
       auto-offset-reset: earliest
@@ -17,7 +17,7 @@ app:
       notifications: notifications
 
 server:
-  port: 8081
+  port: ${PORT:8081}
 
 management:
   endpoints:
