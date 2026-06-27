@@ -1,0 +1,41 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: notification-service
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: notification-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.techstore.*"
+
+app:
+  kafka:
+    topics:
+      order-created: order.created
+      order-cancelled: order.cancelled
+      order-dispatched: order.dispatched
+      order-delivered: order.delivered
+      order-return-requested: order.return.requested
+      refund-issued: refund.issued
+      inventory-reserved: inventory.reserved
+      inventory-released: inventory.released
+      inventory-failed: inventory.failed
+      payment-completed: payment.completed
+      payment-failed: payment.failed
+      payment-dlq: payment.dlq
+      order-status-updated: order.status.updated
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "GET,OPTIONS"

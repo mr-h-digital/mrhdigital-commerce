@@ -1,0 +1,65 @@
+server:
+  port: ${PORT:8083}
+
+spring:
+  application:
+    name: order-service
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/orderdb}
+    driver-class-name: org.postgresql.Driver
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Use jwk-set-uri instead of issuer-uri — avoids blocking startup waiting for Keycloak/Auth0
+          jwk-set-uri: ${JWK_SET_URI:http://localhost:8180/realms/techstore/protocol/openid-connect/certs}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: order-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.techstore.*"
+
+app:
+  kafka:
+    topics:
+      order-created: order.created
+      order-cancelled: order.cancelled
+      order-dispatched: order.dispatched
+      order-delivered: order.delivered
+      order-return-requested: order.return.requested
+      refund-issued: refund.issued
+      inventory-reserved: inventory.reserved
+      inventory-released: inventory.released
+      inventory-failed: inventory.failed
+      payment-completed: payment.completed
+      payment-failed: payment.failed
+      order-status-updated: order.status.updated
+  order:
+    timeout-seconds: 300
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "GET,OPTIONS"

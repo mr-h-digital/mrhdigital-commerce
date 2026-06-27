@@ -1,0 +1,32 @@
+# ── Maven / Spring Boot ──────────────────────────────────────────────
+target/
+*.jar
+*.war
+*.class
+.mvn/wrapper/maven-wrapper.jar
+
+# ── H2 leftover data files ───────────────────────────────────────────
+**/data/*.db
+**/data/*.lock.db
+**/data/*.trace.db
+
+# ── Node / Vite frontends ────────────────────────────────────────────
+node_modules/
+dist/
+.vite/
+
+# ── Environment & secrets ────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── IDE & OS ─────────────────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# ── Claude tooling (local dev only) ──────────────────────────────────
+.claude/
+.claude-flow/

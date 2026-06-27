@@ -1,0 +1,91 @@
+.overlay {
+  position: fixed; inset: 0; z-index: 700;
+  background: var(--overlay); display: flex; align-items: center; justify-content: center;
+  padding: 20px; backdrop-filter: blur(8px); animation: fadeIn .15s ease;
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.modal {
+  background: var(--surface); border: 1px solid var(--border2); border-radius: 20px;
+  width: 100%; max-width: 440px; box-shadow: var(--shadow-xl);
+  animation: scaleIn .2s cubic-bezier(.34,1.56,.64,1); overflow: hidden;
+}
+@keyframes scaleIn { from{opacity:0;transform:scale(.92)} to{opacity:1;transform:scale(1)} }
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 20px 0;
+}
+.headerLeft { display: flex; align-items: center; gap: 12px; }
+.avatar {
+  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+  background: var(--grad-accent); color: #fff; font-size: 16px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.headerTitle { font-size: 16px; font-weight: 800; color: var(--text); }
+.headerSub   { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.closeBtn {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: var(--surface2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-muted); transition: all .15s;
+}
+.closeBtn:hover:not(:disabled) { background: var(--border2); color: var(--text); }
+.closeBtn:disabled { opacity: .4; cursor: not-allowed; }
+.tabs { display: flex; margin: 16px 20px 0; border-bottom: 2px solid var(--border); }
+.tab {
+  flex: 1; background: none; border: none; cursor: pointer;
+  font-size: 14px; font-weight: 600; color: var(--text-muted);
+  padding: 9px 0 10px; border-bottom: 2px solid transparent;
+  font-family: var(--sans); transition: color .15s; margin-bottom: -2px;
+}
+.tab:hover { color: var(--text); }
+.tabActive  { color: var(--accent); border-bottom-color: var(--accent); }
+.body { padding: 18px 20px 20px; }
+.error {
+  display: flex; align-items: flex-start; gap: 8px;
+  background: var(--red-bg); color: var(--red);
+  border: 1px solid rgba(239,68,68,.25); border-radius: 8px;
+  padding: 10px 12px; font-size: 13px; margin-bottom: 14px;
+}
+.success {
+  background: var(--green-bg); color: var(--green);
+  border: 1px solid rgba(16,185,129,.2); border-radius: 8px;
+  padding: 10px 12px; font-size: 13px; margin-bottom: 14px;
+}
+.form { display: flex; flex-direction: column; gap: 13px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 400px) { .row2 { grid-template-columns: 1fr; } }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+.input {
+  background: var(--surface2); border: 1.5px solid var(--border2);
+  border-radius: 10px; color: var(--text); font-size: 14px;
+  font-family: var(--sans); padding: 10px 13px; outline: none;
+  transition: border-color .15s, box-shadow .15s; width: 100%;
+}
+.input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.pwdWrap { position: relative; display: flex; align-items: center; }
+.pwdWrap .input { padding-right: 40px; }
+.pwdError .input { border-color: var(--red); }
+.eyeBtn {
+  position: absolute; right: 11px; background: none; border: none;
+  cursor: pointer; color: var(--text-muted); padding: 3px;
+  display: flex; align-items: center; border-radius: 4px; transition: color .15s;
+}
+.eyeBtn:hover { color: var(--text); }
+.hint { font-size: 11px; color: var(--text-muted); }
+.roleNote {
+  display: flex; align-items: center; font-size: 12px; color: var(--text-muted);
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 9px 12px;
+}
+.saveBtn {
+  width: 100%; background: var(--grad-accent); color: #fff; border: none;
+  font-size: 14px; font-weight: 700; padding: 12px; border-radius: 11px;
+  cursor: pointer; font-family: var(--sans); transition: all .15s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 4px 14px var(--accent-glow); margin-top: 4px;
+}
+.saveBtn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px var(--accent-glow); }
+.saveBtn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.spinner { animation: spin .75s linear infinite; }

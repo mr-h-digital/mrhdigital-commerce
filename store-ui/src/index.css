@@ -1,0 +1,98 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #f4f7ff;
+  --surface:      #ffffff;
+  --surface2:     #eef2ff;
+  --surface3:     #e8edfd;
+  --border:       #dde3f5;
+  --border2:      #c8d0ee;
+  --text:         #0d1440;
+  --text-muted:   #4e5a80;
+  --text-light:   #8892b0;
+  --accent:       #4f46e5;
+  --accent2:      #7c3aed;
+  --accent-light: #eef2ff;
+  --accent-glow:  rgba(79,70,229,0.18);
+  --green:        #10b981;
+  --green-bg:     #ecfdf5;
+  --red:          #ef4444;
+  --red-bg:       #fef2f2;
+  --yellow:       #f59e0b;
+  --yellow-bg:    #fffbeb;
+  --orange:       #f97316;
+  --pink:         #ec4899;
+  --shadow-sm:    0 1px 2px rgba(13,20,64,.05);
+  --shadow:       0 1px 3px rgba(13,20,64,.07), 0 2px 8px rgba(13,20,64,.05);
+  --shadow-md:    0 4px 12px rgba(13,20,64,.08), 0 1px 3px rgba(13,20,64,.05);
+  --shadow-lg:    0 8px 32px rgba(79,70,229,.12), 0 2px 8px rgba(13,20,64,.06);
+  --shadow-xl:    0 20px 60px rgba(79,70,229,.15), 0 4px 16px rgba(13,20,64,.08);
+  --radius-sm:    8px;
+  --radius:       14px;
+  --radius-lg:    20px;
+  --mono:         'JetBrains Mono', monospace;
+  --sans:         'Inter', sans-serif;
+  --grad-accent:  linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  --grad-hero:    linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4c1d95 100%);
+  --overlay:      rgba(15,23,42,.5);
+  --overlay-light: rgba(15,23,42,.45);
+}
+
+[data-theme="dark"] {
+  --bg:           #080a14;
+  --surface:      #0e1120;
+  --surface2:     #141828;
+  --surface3:     #1a2035;
+  --border:       #1f2740;
+  --border2:      #283050;
+  --text:         #e8eeff;
+  --text-muted:   #7c8ab0;
+  --text-light:   #4e5a80;
+  --accent-light: rgba(99,102,241,.15);
+  --shadow-sm:    0 1px 2px rgba(0,0,0,.3);
+  --shadow:       0 1px 3px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.3);
+  --shadow-md:    0 4px 12px rgba(0,0,0,.4), 0 1px 3px rgba(0,0,0,.3);
+  --shadow-lg:    0 8px 32px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.3);
+  --shadow-xl:    0 20px 60px rgba(0,0,0,.6), 0 4px 16px rgba(0,0,0,.4);
+  --green-bg:     rgba(16,185,129,.12);
+  --red-bg:       rgba(239,68,68,.12);
+  --yellow-bg:    rgba(245,158,11,.12);
+  --grad-hero:    linear-gradient(135deg, #030512 0%, #0c0f2e 40%, #130a2e 100%);
+  --overlay:      rgba(0,0,0,.7);
+  --overlay-light: rgba(0,0,0,.6);
+}
+
+body {
+  /* background is set here as a fallback only — the animated background
+     renders at z-index:0 and the body must not cover it with an opaque fill.
+     When a background effect is active, body bg is transparent so the
+     fixed AnimatedBackground layer shows through. The --bg colour is applied
+     to .root instead so it sits at z-index:1 but with transparent background
+     when effects are on. */
+  background: var(--bg); color: var(--text);
+  font-family: var(--sans); min-height: 100vh; line-height: 1.5;
+  transition: background .25s, color .25s;
+}
+
+/* When an animated background is active, body becomes transparent */
+body.bg-active {
+  background: transparent;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-light); }
+
+/* Utility */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* Cards get a subtle glass effect so they lift cleanly off any animated background */
+.glass {
+  background: rgba(255,255,255,0.72) !important;
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+}
+[data-theme="dark"] .glass {
+  background: rgba(14,17,32,0.72) !important;
+}

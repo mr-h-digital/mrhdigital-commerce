@@ -1,0 +1,229 @@
+/* ── Shared: fixed behind entire page at z-index 0 ───────────────────────── */
+.orbs, .wave, .grid, .particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Each wrapper carries the base page bg so there's always a readable backdrop */
+.orbs, .wave, .grid {
+  background: var(--bg);
+  transition: background .25s;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   1. FLOATING COLOUR ORBS
+   Light mode: indigo/violet/pink blobs on white — soft but clearly visible
+   Dark mode:  same colours but much higher alpha so they glow on near-black
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+  animation: orbFloat linear infinite;
+}
+
+/* Light mode — high alpha + tighter blur so colour punches through near-white bg */
+.orb1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(99,102,241,.55) 0%, transparent 60%);
+  filter: blur(40px);
+  top: -180px; left: -120px;
+  animation-duration: 18s; animation-delay: 0s;
+}
+.orb2 {
+  width: 550px; height: 550px;
+  background: radial-gradient(circle, rgba(139,92,246,.50) 0%, transparent 60%);
+  filter: blur(38px);
+  top: 25%; right: -100px;
+  animation-duration: 22s; animation-delay: -6s;
+}
+.orb3 {
+  width: 750px; height: 750px;
+  background: radial-gradient(circle, rgba(236,72,153,.42) 0%, transparent 60%);
+  filter: blur(48px);
+  bottom: -220px; left: 25%;
+  animation-duration: 26s; animation-delay: -12s;
+}
+.orb4 {
+  width: 450px; height: 450px;
+  background: radial-gradient(circle, rgba(59,130,246,.45) 0%, transparent 60%);
+  filter: blur(35px);
+  top: 45%; left: 15%;
+  animation-duration: 20s; animation-delay: -4s;
+}
+.orb5 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(167,139,250,.50) 0%, transparent 60%);
+  filter: blur(42px);
+  bottom: 5%; right: 10%;
+  animation-duration: 24s; animation-delay: -9s;
+}
+
+/* Dark mode — much higher alpha + wider blur so orbs glow dramatically */
+[data-theme="dark"] .orb1 {
+  background: radial-gradient(circle, rgba(99,102,241,.65) 0%, transparent 65%);
+  filter: blur(80px);
+}
+[data-theme="dark"] .orb2 {
+  background: radial-gradient(circle, rgba(139,92,246,.60) 0%, transparent 65%);
+  filter: blur(75px);
+}
+[data-theme="dark"] .orb3 {
+  background: radial-gradient(circle, rgba(236,72,153,.50) 0%, transparent 65%);
+  filter: blur(85px);
+}
+[data-theme="dark"] .orb4 {
+  background: radial-gradient(circle, rgba(59,130,246,.58) 0%, transparent 65%);
+  filter: blur(70px);
+}
+[data-theme="dark"] .orb5 {
+  background: radial-gradient(circle, rgba(167,139,250,.62) 0%, transparent 65%);
+  filter: blur(78px);
+}
+
+@keyframes orbFloat {
+  0%   { transform: translate(0px,   0px)   scale(1);    }
+  20%  { transform: translate(35px, -45px)  scale(1.06); }
+  40%  { transform: translate(-25px, 35px)  scale(0.96); }
+  60%  { transform: translate(45px,  25px)  scale(1.09); }
+  80%  { transform: translate(-35px,-25px)  scale(0.94); }
+  100% { transform: translate(0px,   0px)   scale(1);    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   2. AURORA WAVE — canvas-drawn sinusoidal wave curtains
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.auroraCanvas {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   3. RETRO GRID
+   Light mode: visible indigo lines + strong fade-out at top
+   Dark mode:  bright neon lines with glow filter
+   gridFade uses var(--bg) → auto-adapts ✅
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Grid lines — flat repeating pattern, scrolls upward ── */
+.gridLines {
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  background-image:
+    linear-gradient(rgba(99,102,241,.55) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,.55) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridScroll 4s linear infinite;
+}
+
+/* Accent glow: radial purple/violet bloom in the centre */
+.gridGlow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 60%,
+      rgba(139,92,246,.30) 0%,
+      rgba(99,102,241,.15) 40%,
+      transparent 70%
+    );
+  animation: gridGlowPulse 6s ease-in-out infinite alternate;
+}
+
+/* Fade the top of the grid into the page background */
+.gridTopFade {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 35%;
+  background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+}
+
+@keyframes gridScroll {
+  from { background-position: 0 0;    }
+  to   { background-position: 0 60px; }
+}
+@keyframes gridGlowPulse {
+  from { opacity: 0.7; transform: scale(1);    }
+  to   { opacity: 1;   transform: scale(1.08); }
+}
+
+/* Dark mode — brighter lines + stronger glow */
+[data-theme="dark"] .gridLines {
+  background-image:
+    linear-gradient(rgba(129,140,248,.75) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(129,140,248,.75) 1px, transparent 1px);
+}
+[data-theme="dark"] .gridGlow {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 60%,
+      rgba(139,92,246,.55) 0%,
+      rgba(99,102,241,.30) 40%,
+      transparent 70%
+    );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   4. PARTICLE FIELD (canvas)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.particles {
+  display: block;
+  background: var(--bg);
+  transition: background .25s;
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   5. VIDEO BACKGROUND  (Pexels 8675548 — geometric shapes)
+
+   Strategy:
+   • The raw video is vivid and full-contrast — must be dimmed behind content.
+   • A tint overlay blends the page background colour into the video so text
+     and cards remain readable in both themes.
+   • Light mode: white tint at 55% opacity = video shows at ~45% strength,
+     washed towards white so it doesn't overpower the light UI.
+   • Dark mode:  dark tint at 45% opacity = video shows at ~55% strength,
+     vivid enough to glow on the dark background without blinding the user.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.videoBg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--bg);       /* fallback while video loads */
+  transition: background .25s;
+}
+
+.videoEl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;           /* always fills the viewport, no letterbox */
+  object-position: center;
+  /* No opacity here — tint overlay controls perceived brightness */
+}
+
+/* Tint overlay: blends the bg colour into the video */
+.videoTint {
+  position: absolute;
+  inset: 0;
+  /* Light mode: 55% white wash so video reads as a subtle backdrop */
+  background: rgba(244,247,255, 0.55);
+  transition: background .25s;
+}
+
+[data-theme="dark"] .videoTint {
+  /* Dark mode: 42% dark overlay — video glows through without blinding */
+  background: rgba(8,10,20, 0.42);
+}

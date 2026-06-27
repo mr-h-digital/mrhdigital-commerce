@@ -1,0 +1,38 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: payment-service
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: payment-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.techstore.*"
+
+app:
+  kafka:
+    topics:
+      inventory-reserved: inventory.reserved
+      payment-completed: payment.completed
+      payment-failed: payment.failed
+      payment-dlq: payment.dlq
+  circuit-breaker:
+    failure-threshold: 3
+    recovery-timeout-seconds: 30
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "GET,OPTIONS"
