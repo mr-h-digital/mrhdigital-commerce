@@ -30,3 +30,7 @@ Thumbs.db
 # ── Claude tooling (local dev only) ──────────────────────────────────
 .claude/
 .claude-flow/
+**/.claude/
+**/.claude-flow/
+CLAUDE.md
+**/CLAUDE.md
