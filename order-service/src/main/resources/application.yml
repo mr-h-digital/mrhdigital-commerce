@@ -6,10 +6,10 @@ spring:
     name: order-service
 
   datasource:
-    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/orderdb}
+    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:orderdb}
     driver-class-name: org.postgresql.Driver
-    username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:}
+    username: ${PGUSER:postgres}
+    password: ${PGPASSWORD:}
 
   jpa:
     hibernate:
